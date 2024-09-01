@@ -1,0 +1,246 @@
+/* Importar la fuente Ubuntu de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+/* Estilos generales para el cuerpo de la página del dashboard */
+body.dashboard {
+    background: linear-gradient(to right, #7f8c8d, #95a5a6); /* Fondo con degradado */
+    color: #2c3e50; /* Color del texto */
+    font-family: 'Ubuntu', sans-serif; /* Fuente Ubuntu */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centrar el contenido horizontalmente */
+}
+
+/* Contenedor principal del dashboard */
+.dashboard-container {
+    background-color: #ecf0f1; /* Fondo claro */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    width: 90%;
+    max-width: 1200px; /* Ancho máximo */
+    margin-top: 20px; /* Espacio superior */
+}
+
+/* Encabezado del dashboard */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between; /* Espaciar elementos a los extremos */
+    align-items: center; /* Alinear verticalmente */
+    margin-bottom: 20px;
+}
+
+/* Título del encabezado */
+.dashboard-header h1 {
+    font-size: 2.5em;
+    color: #2c3e50;
+}
+
+/* Contenedor de los enlaces del encabezado */
+.header-links {
+    display: flex;
+    gap: 10px; /* Espacio entre enlaces */
+}
+
+/* Estilos para los enlaces del encabezado */
+.header-link {
+    padding: 10px 20px;
+    background-color: #27ae60; /* Fondo verde */
+    color: white;
+    text-decoration: none; /* Sin subrayado */
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Estilos específicos para el enlace de logout */
+.header-link.logout-link {
+    background-color: #e74c3c; /* Fondo rojo */
+}
+
+/* Efecto hover para los enlaces del encabezado */
+.header-link:hover {
+    background-color: #2ecc71; /* Verde más claro */
+}
+
+/* Efecto hover específico para el enlace de logout */
+.header-link.logout-link:hover {
+    background-color: #c0392b; /* Rojo más oscuro */
+}
+
+/* Contenido principal del dashboard */
+.dashboard-content {
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Contenedor de los filtros */
+.filter-container {
+    background-color: #ecf0f1; /* Fondo claro */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Permitir ajuste de elementos */
+    justify-content: space-between; /* Espaciar elementos */
+    align-items: center; /* Alinear verticalmente */
+}
+
+/* Grupo de filtros */
+.filter-group {
+    display: flex;
+    flex-direction: column; /* Alinear en columna */
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Estilos para las etiquetas de los filtros */
+.filter-container label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Estilos para los controles de formulario */
+.filter-container .form-control {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #bdc3c7;
+    font-size: 16px;
+    width: 200px;
+    box-sizing: border-box; /* Incluir padding y border en el tamaño */
+}
+
+/* Estilos para el botón de filtro */
+.filter-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #27ae60; /* Fondo verde */
+    color: white;
+    font-size: 16px;
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s ease; /* Transición suave */
+    align-self: center;
+    margin-top: 10px;
+}
+
+/* Efecto hover para el botón de filtro */
+.filter-container button:hover {
+    background-color: #2ecc71; /* Verde más claro */
+}
+
+/* Contenedor para eliminar incidencias */
+.delete-container {
+    display: flex;
+    align-items: center; /* Alinear verticalmente */
+    gap: 10px; /* Espacio entre elementos */
+    margin-bottom: 20px;
+}
+
+/* Estilos para las etiquetas de eliminación */
+.delete-container label {
+    font-weight: bold;
+}
+
+/* Estilos para los controles de formulario en eliminación */
+.delete-container .form-control {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #bdc3c7;
+    font-size: 16px;
+    width: auto;
+    box-sizing: border-box; /* Incluir padding y border en el tamaño */
+}
+
+/* Ancho específico para el input de eliminación */
+.delete-container .delete-input {
+    width: 200px;
+}
+
+/* Estilos para el botón de eliminación */
+.delete-container .delete-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e74c3c; /* Fondo rojo */
+    color: white;
+    font-size: 16px;
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover para el botón de eliminación */
+.delete-container .delete-button:hover {
+    background-color: #c0392b; /* Rojo más oscuro */
+}
+
+/* Contenedor para la tabla de incidencias */
+.table-container {
+    margin-top: 20px;
+}
+
+/* Estilos generales para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Colapsar bordes */
+}
+
+/* Bordes para la tabla y celdas */
+table, th, td {
+    border: 1px solid #bdc3c7;
+}
+
+/* Padding y alineación de celdas */
+th, td {
+    padding: 10px;
+    text-align: left; /* Alinear texto a la izquierda */
+}
+
+/* Estilos para los encabezados de la tabla */
+th {
+    background-color: #34495e; /* Fondo oscuro */
+    color: white;
+}
+
+/* Estilos para las celdas de datos */
+td {
+    background-color: #ecf0f1; /* Fondo claro */
+}
+
+/* Estilos para los botones del dashboard */
+.dashboard-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #27ae60; /* Fondo verde */
+    color: white;
+    font-size: 16px;
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover para los botones del dashboard */
+.dashboard-button:hover {
+    background-color: #2ecc71; /* Verde más claro */
+}
+
+/* Estilos específicos para el botón de cerrar incidencia */
+.close-button {
+    background-color: #e74c3c; /* Fondo rojo */
+}
+
+/* Efecto hover específico para el botón de cerrar incidencia */
+.close-button:hover {
+    background-color: #c0392b; /* Rojo más oscuro */
+}
+
+/* Estilos específicos para el botón de reabrir incidencia */
+.reopen-button {
+    background-color: #27ae60; /* Fondo verde */
+}
+
+/* Efecto hover específico para el botón de reabrir incidencia */
+.reopen-button:hover {
+    background-color: #2ecc71; /* Verde más claro */
+}

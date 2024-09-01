@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <!-- Vinculación del archivo de estilos CSS para la página de perfil -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+    <script>
+        // Función JavaScript para redirigir después de 5 segundos
+        setTimeout(function() {
+            window.location.href = "{{ url_for('main.index') }}";
+        }, 5000); // 5000 milisegundos = 5 segundos
+    </script>
+</head>
+<body class="profile">
+    <!-- Contenedor principal del perfil -->
+    <div class="profile-container">
+        <!-- Encabezado del perfil -->
+        <div class="profile-header">
+            <h1>Bienvenid@, {{ name }}!</h1>
+        </div>
+        <!-- Contenido del perfil -->
+        <div class="profile-content">
+            <p>Serás redireccionado en 5 segundos...</p>
+        </div>
+    </div>
+</body>
+</html>

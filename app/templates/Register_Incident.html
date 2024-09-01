@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Incident</title>
+    <!-- Vinculación del archivo de estilos CSS para la página de registro de incidencias -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='register_incident.css') }}">
+</head>
+<body class="register">
+    <!-- Contenedor principal del registro de incidencias -->
+    <div class="register-container">
+        <!-- Encabezado del registro de incidencias -->
+        <div class="register-header">
+            <h1>Register Incident</h1>
+            <div class="header-links">
+                <!-- Enlaces de navegación -->
+                <a href="{{ url_for('main.index') }}" class="header-link">Home</a>
+                <a href="{{ url_for('main.dashboard') }}" class="header-link">Dashboard</a>
+                <a href="{{ url_for('main.kpis') }}" class="header-link">KPIs</a>
+                <a href="{{ url_for('main.logout') }}" class="header-link logout-link">Logout</a>
+            </div>
+        </div>
+        <!-- Contenido del registro de incidencias -->
+        <div class="register-content">
+            <!-- Formulario para registrar una nueva incidencia -->
+            <form method="POST" action="{{ url_for('main.register_incident') }}">
+                {{ form.hidden_tag() }}
+                <!-- Grupo de entrada para el nombre del proyecto -->
+                <div class="input-group">
+                    <label for="project">Proyecto:</label>
+                    {{ form.project(id="project", class_="form-control", placeholder="Enter project name") }}
+                </div>
+                <!-- Grupo de entrada para la descripción de la incidencia -->
+                <div class="input-group">
+                    <label for="description">Descripción:</label>
+                    {{ form.description(id="description", class_="form-control", placeholder="Enter description") }}
+                </div>
+                <!-- Grupo de entrada para la posición de la incidencia -->
+                <div class="input-group">
+                    <label for="position">Posición:</label>
+                    {{ form.position(id="position", class_="form-control", placeholder="Enter position") }}
+                </div>
+                <!-- Grupo de entrada para el responsable de la incidencia -->
+                <div class="input-group">
+                    <label for="responsible">Responsable:</label>
+                    {{ form.responsible(id="responsible", class_="form-control", placeholder="Enter responsible person") }}
+                </div>
+                <!-- Grupo de entrada para el estado de la incidencia -->
+                <div class="input-group">
+                    <label for="status">Estado:</label>
+                    {{ form.status(id="status", class_="form-control", placeholder="Enter status") }}
+                </div>
+                <!-- Botón para enviar el formulario -->
+                <button type="submit" class="button">Registrar Incidencia</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

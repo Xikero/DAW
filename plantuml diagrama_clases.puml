@@ -1,0 +1,64 @@
+@startuml
+
+' Definición de clases
+class User {
+    Integer id
+    String username
+    String email
+    String password_hash
+    + set_password(String password)
+    + check_password(String password)
+    + to_dict()
+}
+
+class Incident {
+    Integer id
+    String project
+    String description
+    String position
+    String responsible
+    String status
+    DateTime created_at
+    Integer created_by
+    + to_dict()
+    + create_incident()
+    + read_incident()
+    + update_incident()
+    + delete_incident()
+}
+
+class RegistrationForm {
+    StringField username
+    StringField email
+    PasswordField password
+    PasswordField confirm_password
+    SubmitField submit
+    + validate()
+}
+
+class LoginForm {
+    StringField email
+    PasswordField password
+    BooleanField remember_me
+    SubmitField submit
+    + validate()
+}
+
+class IncidentForm {
+    SelectField project
+    TextAreaField description
+    SelectField position
+    SelectField responsible
+    SelectField status
+    SubmitField submit
+    + validate()
+    + submit()
+}
+
+' Relaciones entre clases
+User "1" -- "0..*" Incident : creates
+IncidentForm --> Incident : handles
+RegistrationForm --> User : creates
+LoginForm --> User : authenticates
+
+@enduml

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <!-- Vinculación del archivo de estilos CSS para la página de inicio -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body class="index">
+    <div class="index-container">
+        <!-- Encabezado de la página de inicio -->
+        <div class="index-header">
+            <h1>Bienvenido {{ nombre_usuario|capitalize }}, Sistema de Gestión de Incidencias.</h1>
+        </div>
+        <!-- Enlace para cerrar sesión -->
+        <div class="header-links">
+            <a href="{{ url_for('main.logout') }}" class="button btn-logout">Logout</a>
+        </div>
+        <!-- Contenido principal de la página de inicio -->
+        <div class="index-content">
+            <h3>Navega a través de nuestras herramientas para gestionar y analizar las incidencias de tu proyecto.</h3>
+            <!-- Contenedor de las herramientas disponibles -->
+            <div class="tool-boxes">
+                <!-- Caja de herramienta del Dashboard -->
+                <div class="tool-box">
+                    <nav>
+                        <!-- Enlace para gestionar usuarios 
+                        <a href="{{ url_for('main.manage_users') }}">Manage Users</a>-->
+                    </nav>
+                    
+                    <h3>Dashboard</h3>
+                    <p>Visualiza todas las incidencias en un solo lugar.</p>
+                    <a href="{{ url_for('main.dashboard') }}" class="button btn-dashboard">Dashboard</a>
+                </div>
+                <!-- Caja de herramienta para registrar incidencias -->
+                <div class="tool-box">
+                    <h3>Registrar Incidencia</h3>
+                    <p>Registra nuevas incidencias de manera rápida y sencilla.</p>
+                    <a href="{{ url_for('main.register_incident') }}" class="button btn-register-incident">Registrar Incidencia</a>
+                </div>
+                <!-- Caja de herramienta para KPIs -->
+                <div class="tool-box">
+                    <h3>KPIs</h3>
+                    <p>Analiza las incidencias a través de nuestras herramientas de KPIs.</p>
+                    <a href="{{ url_for('main.kpis') }}" class="button btn-kpis">KPIs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

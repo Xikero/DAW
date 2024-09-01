@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPIs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='kpi.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+        .legend-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px;
+        }
+        .legend-color-box {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="kpi">
+    <div class="header">
+        <div class="nav-buttons">
+            <a href="{{ url_for('main.index') }}" class="button">Home</a>
+            <a href="{{ url_for('main.dashboard') }}" class="button">Dashboard</a>
+            <a href="{{ url_for('main.register_incident') }}" class="button">Registrar Incidencia</a>
+            <a href="{{ url_for('main.logout') }}" class="button logout">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="filter-container">
+            <form method="GET" action="{{ url_for('main.kpis') }}" class="filter-form">
+                <div class="filter-group">
+                    <label for="project">Proyecto:</label>
+                    <select name="project" id="project" class="form-control">
+                        <option value="">TODOS</option>
+                        <option value="Madrid_T7" {% if request.args.get('project') == 'Madrid_T7' %}selected{% endif %}>Madrid_T7</option>
+                        <option value="Luxemburgo_T1" {% if request.args.get('project') == 'Luxemburgo_T1' %}selected{% endif %}>Luxemburgo_T1</option>
+                        <option value="Brujas_T1" {% if request.args.get('project') == 'Brujas_T1' %}selected{% endif %}>Brujas_T1</option>
+                        <option value="Estocolmo_T2" {% if request.args.get('project') == 'Estocolmo_T2' %}selected{% endif %}>Estocolmo_T2</option>
+                        <option value="Paris_T6" {% if request.args.get('project') == 'Paris_T6' %}selected{% endif %}>Paris_T6</option>
+                        <option value="Lisboa_T4" {% if request.args.get('project') == 'Lisboa_T4' %}selected{% endif %}>Lisboa_T4</option>
+                        <option value="Roma_T2" {% if request.args.get('project') == 'Roma_T2' %}selected{% endif %}>Roma_T2</option>
+                        <option value="Munich_T2" {% if request.args.get('project') == 'Munich_T2' %}selected{% endif %}>Munich_T2</option>
+                        <option value="London_T2" {% if request.args.get('project') == 'London_T2' %}selected{% endif %}>London_T2</option>
+                    </select>
+                </div>
+                <button type="submit" class="dashboard-button">Filter</button>
+            </form>
+        </div>
+        <div class="row">
+            <div class="box">
+                <h2>Incidencias por Proyecto</h2>
+                <div class="chart-container">
+                    <canvas id="incidenciasProyectoChart"></canvas>
+                </div>
+            </div>
+            <div class="box">
+                <h2>Estado de las Incidencias</h2>
+                <div class="chart-container">
+                    <canvas id="estadoIncidenciasChart"></canvas>
+                </div>
+            </div>
+            <div class="box">
+                <h2>Incidencias por Responsable</h2>
+                <div class="chart-container">
+                    <canvas id="responsableIncidenciasChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="box">
+                <h2>Histórico de Incidencias</h2>
+                <div class="chart-container">
+                    <canvas id="historicoIncidenciasChart"></canvas>
+                </div>
+            </div>
+            <div class="box">
+                <h2>Incidencias por Proyecto y Mes</h2>
+                <div class="chart-container">
+                    <canvas id="incidenciasPorProyectoYMesChart"></canvas>
+                </div>
+                <div id="project-legend" class="legend-container"></div>
+            </div>
+            <div class="box">
+                <h2>Incidencias por Autor</h2>
+                <div class="chart-container">
+                    <canvas id="incidenciasAutorChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const incidents = {{ incidents|tojson|safe }};
+        const colors = [
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)',
+            'rgba(75, 192, 192, 0.4)',
+            'rgba(255, 99, 132, 0.4)',
+            'rgba(54, 162, 235, 0.4)',
+            'rgba(255, 206, 86, 0.4)',
+            'rgba(153, 102, 255, 0.4)',
+            'rgba(255, 159, 64, 0.4)'
+        ];
+
+        function filterIncidents(incidents, project) {
+            if (!project) {
+                return incidents;
+            }
+            return incidents.filter(incident => incident.project === project);
+        }
+
+        function updateCharts() {
+            const project = document.getElementById('project').value;
+            const filteredIncidents = filterIncidents(incidents, project);
+
+            // Data preparation for the charts
+            const projectCounts = {};
+            const statusCounts = { "Abierto": 0, "Cerrado": 0 };
+            const responsibleCounts = {};
+            const monthlyCounts = new Array(12).fill(0);
+            const projectMonthlyCounts = {};
+            const authorCounts = {};
+
+            filteredIncidents.forEach(incident => {
+                // Incidencias por Proyecto
+                projectCounts[incident.project] = (projectCounts[incident.project] || 0) + 1;
+
+                // Estado de las Incidencias
+                statusCounts[incident.status] = (statusCounts[incident.status] || 0) + 1;
+
+                // Incidencias por Responsable
+                responsibleCounts[incident.responsible] = (responsibleCounts[incident.responsible] || 0) + 1;
+
+                // Histórico de Incidencias
+                const createdAt = new Date(incident.created_at);
+                monthlyCounts[createdAt.getMonth()]++;
+
+                // Incidencias por Proyecto y Mes
+                if (!projectMonthlyCounts[incident.project]) {
+                    projectMonthlyCounts[incident.project] = new Array(12).fill(0);
+                }
+                projectMonthlyCounts[incident.project][createdAt.getMonth()]++;
+
+                // Incidencias por Autor
+                authorCounts[incident.created_by] = (authorCounts[incident.created_by] || 0) + 1;
+            });
+
+            // Incidencias por Proyecto Chart
+            new Chart(document.getElementById('incidenciasProyectoChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(projectCounts),
+                    datasets: [{
+                        label: 'Incidencias por Proyecto',
+                        data: Object.values(projectCounts),
+                        backgroundColor: colors.slice(0, Object.keys(projectCounts).length),
+                        borderColor: colors.slice(0, Object.keys(projectCounts).length).map(color => color.replace('0.6', '1')),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
+
+            // Estado de las Incidencias Chart
+            new Chart(document.getElementById('estadoIncidenciasChart'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(statusCounts),
+                    datasets: [{
+                        label: 'Estado de las Incidencias',
+                        data: Object.values(statusCounts),
+                        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+                        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
+
+            // Incidencias por Responsable Chart
+            new Chart(document.getElementById('responsableIncidenciasChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(responsibleCounts),
+                    datasets: [{
+                        label: 'Incidencias por Responsable',
+                        data: Object.values(responsibleCounts),
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
+
+            // Histórico de Incidencias Chart
+            new Chart(document.getElementById('historicoIncidenciasChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    datasets: [{
+                        label: 'Histórico de Incidencias',
+                        data: monthlyCounts,
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
+
+            // Incidencias por Proyecto y Mes Chart
+            const datasets = Object.keys(projectMonthlyCounts).map((project, index) => ({
+                label: project,
+                data: projectMonthlyCounts[project],
+                borderColor: colors[index % colors.length],
+                backgroundColor: colors[index % colors.length].replace('1)', '0.2)'),
+                fill: false
+            }));
+
+            new Chart(document.getElementById('incidenciasPorProyectoYMesChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    legend: {
+                        display: false // Oculta la leyenda del gráfico
+                    }
+                }
+            });
+
+            // Crear leyenda personalizada debajo del gráfico
+            const legendContainer = document.getElementById('project-legend');
+            legendContainer.innerHTML = ''; // Limpiar leyenda anterior
+
+            datasets.forEach((dataset, index) => {
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+
+                const colorBox = document.createElement('span');
+                colorBox.className = 'legend-color-box';
+                colorBox.style.backgroundColor = colors[index % colors.length].replace('1)', '0.6)');
+
+                const text = document.createElement('span');
+                text.innerText = dataset.label;
+
+                legendItem.appendChild(colorBox);
+                legendItem.appendChild(text);
+                legendContainer.appendChild(legendItem);
+            });
+
+            // Incidencias por Autor Chart
+            new Chart(document.getElementById('incidenciasAutorChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(authorCounts),
+                    datasets: [{
+                        label: 'Incidencias por Autor',
+                        data: Object.values(authorCounts),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
+        }
+
+        document.getElementById('project').addEventListener('change', updateCharts);
+        updateCharts();
+    </script>
+</body>
+</html>

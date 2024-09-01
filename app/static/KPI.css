@@ -1,0 +1,160 @@
+/* Importar la fuente Ubuntu de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+/* Estilos generales para el cuerpo de la página de KPI */
+body.kpi {
+    font-family: 'Ubuntu', sans-serif; /* Fuente Ubuntu */
+    background: linear-gradient(to right, #7f8c8d, #95a5a6); /* Fondo con degradado */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Altura total de la ventana */
+    margin: 0;
+    overflow: hidden; /* Ocultar el desbordamiento */
+}
+
+/* Encabezado fijo */
+.header {
+    width: 100%;
+    background-color: #2c3e50; /* Fondo oscuro */
+    padding: 10px;
+    display: flex;
+    justify-content: center; /* Centrar los botones */
+    align-items: center; /* Alinear verticalmente */
+    position: fixed; /* Fija la barra en la parte superior */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Asegura que la barra esté sobre otros elementos */
+}
+
+/* Contenedor de los botones de navegación */
+.nav-buttons {
+    display: flex;
+    gap: 10px; /* Espacio entre botones */
+}
+
+/* Estilos generales para los botones de navegación */
+.nav-buttons .button {
+    padding: 10px 20px;
+    background-color: #27ae60; /* Fondo verde */
+    color: white; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Estilos específicos para el botón de logout */
+.nav-buttons .button.logout {
+    background-color: #e74c3c; /* Fondo rojo */
+}
+
+/* Efecto hover para los botones de navegación */
+.nav-buttons .button:hover {
+    background-color: #2ecc71; /* Verde más claro */
+}
+
+/* Efecto hover específico para el botón de logout */
+.nav-buttons .button.logout:hover {
+    background-color: #c0392b; /* Rojo más oscuro */
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Permitir ajuste de elementos */
+    gap: 20px; /* Espacio entre cajas */
+    justify-content: center; /* Centrar contenido */
+    margin-top: 70px; /* Ajustar el margen superior para que no se superponga con la barra */
+    padding: 20px; /* Añadir padding para que los gráficos no se peguen al borde */
+    overflow: auto; /* Permitir desplazamiento */
+}
+
+/* Contenedor de filtros */
+.filter-container {
+    display: flex;
+    justify-content: center; /* Centrar contenido */
+    align-items: center; /* Alinear verticalmente */
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Formulario de filtros */
+.filter-form {
+    display: flex;
+    gap: 10px; /* Espacio entre elementos */
+    align-items: center; /* Alinear verticalmente */
+}
+
+/* Grupo de filtros */
+.filter-group {
+    display: flex;
+    flex-direction: column; /* Alinear en columna */
+    align-items: center;
+}
+
+/* Estilos para las etiquetas de filtros */
+.filter-container label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Estilos para los controles de formulario */
+.filter-container .form-control {
+    padding: 10px;
+    border-radius: 5px; /* Bordes redondeados */
+    border: 1px solid #bdc3c7;
+    font-size: 16px;
+    width: 200px;
+    box-sizing: border-box; /* Incluir padding y border en el tamaño */
+}
+
+/* Estilos para los botones del dashboard */
+.dashboard-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #27ae60; /* Fondo verde */
+    color: white; /* Color del texto */
+    font-size: 16px;
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover para los botones del dashboard */
+.dashboard-button:hover {
+    background-color: #2ecc71; /* Verde más claro */
+}
+
+/* Fila para organizar las cajas */
+.row {
+    display: flex;
+    gap: 20px; /* Espacio entre cajas */
+    width: 100%;
+    justify-content: center; /* Centrar contenido */
+}
+
+/* Estilos para cada caja */
+.box {
+    background-color: #ecf0f1; /* Fondo claro */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    width: calc(33% - 40px); /* Ancho calculado */
+    min-width: 300px; /* Ancho mínimo */
+    height: 300px;
+    text-align: center; /* Texto centrado */
+    position: relative;
+}
+
+/* Estilos para los encabezados de las cajas */
+.box h2 {
+    font-size: 1.5em;
+    color: #2c3e50; /* Color del texto */
+    margin-bottom: 10px;
+}
+
+/* Estilos para el canvas */
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 200px; /* Altura máxima */
+}

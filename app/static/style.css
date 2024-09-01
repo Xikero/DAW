@@ -1,0 +1,161 @@
+/* Importar la fuente Poppins de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Estilos generales para el cuerpo de la página */
+body {
+    font-family: 'Poppins', sans-serif; /* Fuente Poppins */
+    background: linear-gradient(135deg, #f0f0f5, #d6d6e0); /* Fondo con degradado */
+    display: flex;
+    justify-content: center; /* Centrar el contenido horizontalmente */
+    align-items: center; /* Centrar el contenido verticalmente */
+    height: 100vh; /* Altura total de la ventana */
+    margin: 0;
+    overflow: hidden; /* Ocultar el desbordamiento */
+}
+
+/* Contenedor principal del formulario */
+.form-container {
+    width: 420px; /* Ancho fijo del contenedor */
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+    border-radius: 20px; /* Bordes redondeados */
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15); /* Sombra */
+    padding: 40px; /* Espaciado interno */
+    text-align: center; /* Texto centrado */
+    z-index: 1; /* Asegura que el contenedor esté sobre otros elementos */
+}
+
+/* Encabezado del formulario */
+.form-header h2 {
+    margin-bottom: 20px;
+    color: #333; /* Color del texto */
+    font-weight: 600; /* Peso de la fuente */
+}
+
+/* Grupo de entrada de datos */
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+    text-align: left; /* Alinear el texto a la izquierda */
+}
+
+/* Estilos para las etiquetas */
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #666; /* Color del texto */
+    font-weight: 400; /* Peso de la fuente */
+}
+
+/* Contenedor para la contraseña */
+.password-container {
+    position: relative;
+}
+
+/* Estilos para los campos de entrada de texto y contraseña */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 14px;
+    padding-right: 45px;
+    border: 1px solid #ccc;
+    border-radius: 12px; /* Bordes redondeados */
+    font-size: 16px;
+    box-sizing: border-box; /* Incluir padding y border en el tamaño */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+    color: #333;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+}
+
+/* Estilos para los marcadores de posición en los campos de entrada */
+input[type="text"]::placeholder, input[type="password"]::placeholder {
+    color: #888;
+}
+
+/* Estilos para los campos de entrada cuando están enfocados */
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #007aff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 122, 255, 0.2);
+}
+
+/* Estilos para el icono de ojo (mostrar/ocultar contraseña) */
+.eye-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center; /* Centrar el icono horizontalmente */
+    align-items: center; /* Centrar el icono verticalmente */
+    cursor: pointer;
+}
+
+/* Estilos para la imagen del icono de ojo */
+.eye-icon img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Contenedor de botones */
+.button-group {
+    display: flex;
+    justify-content: space-between; /* Espaciar los botones a los extremos */
+    gap: 10px; /* Espacio entre botones */
+}
+
+/* Estilos para el botón de login */
+.btn-login {
+    width: 70%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px; /* Bordes redondeados */
+    font-size: 16px;
+    color: white; /* Color del texto */
+    background: linear-gradient(135deg, #6dbf6e, #4e8e4e); /* Tono verde suave */
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra */
+    text-align: center;
+}
+
+/* Efecto hover para el botón de login */
+.btn-login:hover {
+    background: linear-gradient(135deg, #4e8e4e, #3b6a3b);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para el botón de registro */
+.btn-register {
+    width: 30%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px; /* Bordes redondeados */
+    font-size: 16px;
+    color: white; /* Color del texto */
+    background: linear-gradient(135deg, #6ca0d6, #4675a3); /* Tono azul suave */
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra */
+    text-align: center;
+    text-decoration: none; /* Sin subrayado */
+}
+
+/* Efecto hover para el botón de registro */
+.btn-register:hover {
+    background: linear-gradient(135deg, #4675a3, #33587a);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para la lista de mensajes flash */
+.flashes {
+    list-style-type: none; /* Sin viñetas */
+    padding: 0;
+    margin-top: 20px;
+    color: red; /* Color del texto */
+}
+
+/* Estilos para cada mensaje flash */
+.flashes li {
+    margin-bottom: 10px;
+}

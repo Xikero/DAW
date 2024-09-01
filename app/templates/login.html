@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <!-- Vinculación del archivo de estilos CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Contenedor principal del formulario -->
+    <div class="form-container">
+        <!-- Encabezado del formulario -->
+        <div class="form-header">
+            <h2>Iniciar Sesión</h2>
+        </div>
+        <!-- Manejo de mensajes flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flashes">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <!-- Formulario de inicio de sesión -->
+        <form method="POST" action="{{ url_for('main.login') }}">
+            {{ form.hidden_tag() }}
+            <!-- Grupo de entrada para el correo electrónico -->
+            <div class="input-group">
+                <label for="email">Email:</label>
+                {{ form.email(id="email", class_="form-control", placeholder="Enter your email") }}
+            </div>
+            <!-- Grupo de entrada para la contraseña -->
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <div class="password-container">
+                    {{ form.password(id="password", class_="form-control", placeholder="Enter your password") }}
+                    <span class="eye-icon" onclick="togglePassword()">
+                        <img src="{{ url_for('static', filename='eye.png') }}" alt="Show Password" id="eye-icon">
+                    </span>
+                </div>
+            </div>
+            <!-- Botones para enviar el formulario o registrarse -->
+            <div class="button-group">
+                <button type="submit" class="btn-login">Login</button>
+                <a href="{{ url_for('main.register') }}" class="btn-register">Register</a>
+            </div>
+        </form>
+    </div>
+    <!-- Script para mostrar u ocultar la contraseña -->
+    <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById('password');
+            var eyeIcon = document.getElementById('eye-icon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.src = "{{ url_for('static', filename='eye-slash.png') }}"; // Cambia el icono a "ocultar"
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.src = "{{ url_for('static', filename='eye.png') }}"; // Cambia el icono a "mostrar"
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!-- app/templates/register.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <!-- Vinculación del archivo de estilos CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Contenedor principal del formulario de registro -->
+    <div class="form-container">
+        <!-- Encabezado del formulario -->
+        <div class="form-header">
+            <h2>Register</h2>
+        </div>
+        <!-- Formulario de registro -->
+        <form method="POST" action="{{ url_for('main.register') }}" onsubmit="return validateForm()">
+            {{ form.hidden_tag() }}
+            <!-- Grupo de entrada para el nombre de usuario -->
+            <div class="input-group">
+                <label for="username">Username:</label>
+                {{ form.username(id="username", class_="form-control", placeholder="Enter your username") }}
+            </div>
+            <!-- Grupo de entrada para el correo electrónico -->
+            <div class="input-group">
+                <label for="email">Email:</label>
+                {{ form.email(id="email", class_="form-control", placeholder="Enter your email") }}
+            </div>
+            <!-- Grupo de entrada para la contraseña -->
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <div class="password-container">
+                    {{ form.password(id="password", class_="form-control", placeholder="Enter your password", oninput="checkPasswordStrength()") }}
+                    <span class="eye-icon" onclick="togglePassword()">
+                        <img src="{{ url_for('static', filename='eye.png') }}" alt="Show Password" id="eye-icon">
+                    </span>
+                </div>
+                <div id="password-strength" class="password-strength"></div>
+            </div>
+            <!-- Grupo de entrada para confirmar la contraseña -->
+            <div class="input-group">
+                <label for="confirm_password">Confirm Password:</label>
+                {{ form.confirm_password(id="confirm_password", class_="form-control", placeholder="Confirm your password") }}
+            </div>
+            <!-- Grupo de botones para enviar el formulario o volver al inicio de sesión -->
+            <div class="button-group">
+                <button type="submit" class="btn-login">Register</button>
+                <a href="{{ url_for('main.login') }}" class="btn-register">Back to Login</a>
+            </div>
+        </form>
+        <!-- Manejo de mensajes flash -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <!-- Script para mostrar u ocultar la contraseña -->
+    <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById('password');
+            var eyeIcon = document.getElementById('eye-icon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.src = "{{ url_for('static', filename='eye-slash.png') }}"; // Cambia el icono a "ocultar"
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.src = "{{ url_for('static', filename='eye.png') }}"; // Cambia el icono a "mostrar"
+            }
+        }
+
+        // Función para verificar la fortaleza de la contraseña
+        function checkPasswordStrength() {
+            var password = document.getElementById('password').value;
+            var strengthIndicator = document.getElementById('password-strength');
+            var strength = 0;
+
+            if (password.length >= 8) {
+                strength += 1;
+            }
+            if (password.match(/[a-z]+/)) {
+                strength += 1;
+            }
+            if (password.match(/[A-Z]+/)) {
+                strength += 1;
+            }
+            if (password.match(/[0-9]+/)) {
+                strength += 1;
+            }
+            if (password.match(/[\W]+/)) {
+                strength += 1;
+            }
+
+            switch (strength) {
+                case 0:
+                    strengthIndicator.textContent = '';
+                    break;
+                case 1:
+                    strengthIndicator.textContent = 'Debil';
+                    strengthIndicator.style.color = 'red';
+                    break;
+                case 2:
+                    strengthIndicator.textContent = 'Normal';
+                    strengthIndicator.style.color = 'orange';
+                    break;
+                case 3:
+                    strengthIndicator.textContent = 'Buena';
+                    strengthIndicator.style.color = 'yellow';
+                    break;
+                case 4:
+                    strengthIndicator.textContent = 'Segura';
+                    strengthIndicator.style.color = 'green';
+                    break;
+                case 5:
+                    strengthIndicator.textContent = 'Muy Segura';
+                    strengthIndicator.style.color = 'darkgreen';
+                    break;
+            }
+        }
+
+        // Función para validar el formulario antes de enviarlo
+        function validateForm() {
+            var strengthIndicator = document.getElementById('password-strength').textContent;
+            if (strengthIndicator !== 'Segura' && strengthIndicator !== 'Muy Segura') {
+                alert('Por favor, elija una contraseña más segura.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

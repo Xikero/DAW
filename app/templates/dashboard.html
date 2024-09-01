@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incidencias</title>
+    <!-- Vinculación del archivo de estilos CSS para la página del dashboard -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body class="dashboard">
+    <div class="dashboard-container">
+        <!-- Encabezado del dashboard -->
+        <div class="dashboard-header">
+            <h1>Incidencias</h1>
+            <div class="header-links">
+                <!-- Enlaces de navegación para las diferentes secciones de la aplicación -->
+                <a href="{{ url_for('main.index') }}" class="header-link">Home</a>
+                <a href="{{ url_for('main.kpis') }}" class="header-link">KPIs</a>
+                <a href="{{ url_for('main.register_incident') }}" class="header-link">Registrar Incidencia</a>
+                <a href="{{ url_for('main.logout') }}" class="header-link logout-link">Logout</a>
+            </div>
+        </div>
+        <div class="dashboard-content">
+            <!-- Formulario para filtrar incidencias -->
+            <form method="GET" action="{{ url_for('main.dashboard') }}" class="filter-form">
+                <div class="filter-container">
+                    <!-- Campo de selección para filtrar por proyecto -->
+                    <label for="project">Proyecto:</label>
+                    <select name="project" id="project" class="form-control">
+                        <option value="">TODOS</option>
+                        <!-- Lista de opciones para proyectos -->
+                        <option value="Madrid_T7" {% if request.args.get('project') == 'Madrid_T7' %}selected{% endif %}>Madrid_T7</option>
+                        <option value="Luxemburgo_T1" {% if request.args.get('project') == 'Luxemburgo_T1' %}selected{% endif %}>Luxemburgo_T1</option>
+                        <option value="Brujas_T1" {% if request.args.get('project') == 'Brujas_T1' %}selected{% endif %}>Brujas_T1</option>
+                        <option value="Estocolmo_T2" {% if request.args.get('project') == 'Estocolmo_T2' %}selected{% endif %}>Estocolmo_T2</option>
+                        <option value="Paris_T6" {% if request.args.get('project') == 'Paris_T6' %}selected{% endif %}>Paris_T6</option>
+                        <option value="Lisboa_T4" {% if request.args.get('project') == 'Lisboa_T4' %}selected{% endif %}>Lisboa_T4</option>
+                        <option value="Roma_T2" {% if request.args.get('project') == 'Roma_T2' %}selected{% endif %}>Roma_T2</option>
+                        <option value="Munich_T2" {% if request.args.get('project') == 'Munich_T2' %}selected{% endif %}>Munich_T2</option>
+                        <option value="London_T2" {% if request.args.get('project') == 'London_T2' %}selected{% endif %}>London_T2</option>
+                    </select>
+                    
+                    <!-- Campo de selección para filtrar por responsable -->
+                    <label for="responsible">Responsable:</label>
+                    <select name="responsible" id="responsible" class="form-control">
+                        <option value="">TODOS</option>
+                        <!-- Lista de opciones para responsables -->
+                        <option value="Electrico" {% if request.args.get('responsible') == 'Electrico' %}selected{% endif %}>Electrico</option>
+                        <option value="Mecanico" {% if request.args.get('responsible') == 'Mecanico' %}selected{% endif %}>Mecanico</option>
+                        <option value="Calidad" {% if request.args.get('responsible') == 'Calidad' %}selected{% endif %}>Calidad</option>
+                        <option value="Aprovisionamientos" {% if request.args.get('responsible') == 'Aprovisionamientos' %}selected{% endif %}>Aprovisionamientos</option>
+                        <option value="IT" {% if request.args.get('responsible') == 'IT' %}selected{% endif %}>IT</option>
+                    </select>
+                    
+                    <!-- Campo de selección para filtrar por estado -->
+                    <label for="status">Estado:</label>
+                    <select name="status" id="status" class="form-control">
+                        <option value="">TODOS</option>
+                        <!-- Lista de opciones para estado -->
+                        <option value="Abierto" {% if request.args.get('status') == 'Abierto' %}selected{% endif %}>Abierto</option>
+                        <option value="Cerrado" {% if request.args.get('status') == 'Cerrado' %}selected{% endif %}>Cerrado</option>
+                    </select>
+                    
+                    <!-- Botón para aplicar los filtros -->
+                    <button type="submit" class="dashboard-button">Filtrar</button>
+                </div>
+            </form>
+
+            <!-- Formulario para eliminar una incidencia -->
+            <form method="POST" action="{{ url_for('main.dashboard') }}">
+                <div class="delete-container">
+                    <label for="delete_id">ID de la Incidencia a eliminar:</label>
+                    <div class="delete-input-group">
+                        <input type="text" name="delete_id" id="delete_id" placeholder="Enter incident ID" class="form-control delete-input">
+                        <button type="submit" class="dashboard-button delete-button">Eliminar Incidencia</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Tabla de incidencias -->
+            <div class="table-container">
+                <h2>Todas las Incidencias</h2>
+                <table id="incidents-table">
+                    <thead>
+                        <tr>
+                            <!-- Encabezados de la tabla -->
+                            <th>ID</th>
+                            <th>Proyecto</th>
+                            <th>Descripción</th>
+                            <th>Posición</th>
+                            <th>Responsable</th>
+                            <th>Estado</th>
+                            <th>Creado por</th>
+                            <th>Fecha de Creación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Iteración sobre las incidencias para poblar la tabla -->
+                        {% for incident in incidents %}
+                        <tr>
+                            <td>{{ incident.id }}</td>
+                            <td>{{ incident.project }}</td>
+                            <td>{{ incident.description }}</td>
+                            <td>{{ incident.position }}</td>
+                            <td>{{ incident.responsible }}</td>
+                            <td>{{ incident.status }}</td>
+                            <td>{{ incident.created_by }}</td>
+                            <td>{{ incident.created_at.strftime('%Y-%m-%d') }}</td>
+                            <td>
+                                <!-- Acciones para cerrar o reabrir la incidencia -->
+                                {% if incident.status == 'Abierto' %}
+                                <form method="POST" action="{{ url_for('main.close_incident', incident_id=incident.id) }}">
+                                    <button type="submit" class="dashboard-button close-button">Cerrar</button>
+                                </form>
+                                {% elif incident.status == 'Cerrado' %}
+                                <form method="POST" action="{{ url_for('main.reopen_incident', incident_id=incident.id) }}">
+                                    <button type="submit" class="dashboard-button reopen-button">Reabrir</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

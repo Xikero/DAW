@@ -1,0 +1,71 @@
+@startuml
+
+' Definir nodos
+node "Usuario/Navegador Web" as Browser {
+    [Navegador Web]
+}
+
+node "Aplicación Web" {
+    component [Frontend] as FE {
+        [index.html]
+        [dashboard.html]
+        [login.html]
+        [register.html]
+        [profile.html]
+        [register_incident.html]
+        [kpi.html]
+    }
+
+    component "API" as API {
+        [static/main.js]
+    }
+
+    component [Backend] as BE {
+        [app/__init__.py]
+        [app/routes.py]
+        [app/models.py]
+        [app/forms.py]
+        [config.py]
+        [run.py]
+        [create_incident_table.py]
+        [import_csv_to_db.py]
+    }
+
+    component [Database] as DB {
+        [SQLite]
+    }
+}
+
+' Relaciones entre componentes
+Browser --> FE : "Interacción del usuario"
+FE --> API : "Llamadas a la API"
+API --> BE : "Comunicación"
+BE --> DB : "Consultas SQL"
+
+' Agregar notas a los componentes
+note top of Browser
+  Este es el navegador web del usuario,
+  donde se carga el frontend de la aplicación.
+end note
+
+note top of FE
+  Este es el frontend de la aplicación,
+  encargado de la interfaz de usuario.
+end note
+
+note top of API
+  Este es el componente API de la aplicación,
+  encargado de manejar las solicitudes y respuestas.
+end note
+
+note top of BE
+  Este es el backend de la aplicación,
+  maneja la lógica del negocio y las solicitudes API.
+end note
+
+note top of DB
+  Este es el componente de base de datos,
+  almacena y gestiona los datos.
+end note
+
+@enduml

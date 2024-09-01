@@ -1,0 +1,96 @@
+@startuml
+
+!define RECTANGLE class
+
+RECTANGLE "Iniciar Sesión" as Login {
+    [Email:      ________]
+    [Contraseña: ________]
+    ----
+    [Iniciar Sesión]
+    ----
+    [¿Olvidaste tu contraseña?] [Registrarse]
+}
+
+RECTANGLE "Registrarse" as Register {
+    [Nombre de usuario:      ________]
+    [Email:                  ________]
+    [Contraseña:             ________]
+    [Confirmar Contraseña:   ________]
+    ----
+    [Registrarse]
+    ----
+    [¿Ya tienes una cuenta? Iniciar Sesión]
+}
+
+RECTANGLE "Perfil" as Profile {
+    [Bienvenido, [Nombre del Usuario]]
+    ----
+    [Ir a la Página de Inicio]
+}
+
+RECTANGLE "Página de Inicio" as Index {
+    [Bienvenido a la Aplicación de Gestión de Incidencias]
+    [Panel de Control]
+    [Registrar Incidencia]
+    [KPIs]
+    [Logout]
+}
+
+RECTANGLE "Panel de Control" as Dashboard {
+    [Inicio] [Registrar Incidencia] [KPIs] [Logout]
+    ----
+    [Bienvenido, [Nombre del Usuario]]
+    ----
+    [Actividades recientes:]
+    [- Incidencia #1234 creada]
+    [- Incidencia #1235 actualizada]
+    ----
+    [Estadísticas:]
+    [- Incidencias abiertas: 5]
+    [- Incidencias cerradas: 10]
+}
+
+RECTANGLE "Registrar Incidencia" as RegisterIncident {
+    [Inicio] [Panel de Control] [KPIs] [Logout]
+    ----
+    [Proyecto:               ________]
+    [Descripción:            ________]
+    [Posición:               ________]
+    [Responsable:            ________]
+    [Estado:                 ________]
+    ----
+    [Registrar Incidencia]
+}
+
+RECTANGLE "KPIs" as KPIs {
+    [Inicio] [Registrar Incidencia] [Panel de Control] [Logout]
+    ----
+    [Gráfico de Incidencias por Proyecto]
+    [Gráfico de Estado de Incidencias]
+    [Gráfico de Incidencias por Responsable]
+}
+
+' Relaciones entre las páginas
+Login --> Register : "Registrarse"
+Login --> Profile : "Iniciar Sesión"
+Register --> Login : "Iniciar Sesión"
+Register --> Profile : "Registrarse"
+Profile --> Index : "Ir a la Página de Inicio"
+Index --> Dashboard : "Panel de Control"
+Index --> RegisterIncident : "Registrar Incidencia"
+Index --> KPIs : "KPIs"
+Index --> Login : "Logout"
+Dashboard --> Index : "Inicio"
+Dashboard --> RegisterIncident : "Registrar Incidencia"
+Dashboard --> KPIs : "KPIs"
+Dashboard --> Login : "Logout"
+RegisterIncident --> Index : "Inicio"
+RegisterIncident --> Dashboard : "Panel de Control"
+RegisterIncident --> KPIs : "KPIs"
+RegisterIncident --> Login : "Logout"
+KPIs --> Index : "Inicio"
+KPIs --> RegisterIncident : "Registrar Incidencia"
+KPIs --> Dashboard : "Panel de Control"
+KPIs --> Login : "Logout"
+
+@enduml

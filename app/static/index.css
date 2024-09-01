@@ -1,0 +1,137 @@
+/* Importar la fuente Poppins de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Estilos generales para el cuerpo de la página de index */
+body.index {
+    font-family: 'Poppins', sans-serif; /* Fuente Poppins */
+    background: linear-gradient(135deg, #505050, #707070); /* Fondo con degradado */
+    display: flex;
+    justify-content: center; /* Centrar el contenido horizontalmente */
+    align-items: center; /* Centrar el contenido verticalmente */
+    height: 100vh; /* Altura total de la ventana */
+    margin: 0;
+}
+
+/* Contenedor principal del index */
+.index-container {
+    background: rgba(255, 255, 255, 0.85); /* Fondo blanco con transparencia */
+    padding: 40px;
+    border-radius: 20px; /* Bordes redondeados */
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15); /* Sombra */
+    width: 80%;
+    max-width: 1200px; /* Ancho máximo */
+    text-align: center;
+}
+
+/* Encabezado del index */
+.index-header h1 {
+    margin-bottom: 20px;
+    color: #333; /* Color del texto */
+    font-weight: 600; /* Peso de la fuente */
+}
+
+/* Contenido del index */
+.index-content h3 {
+    margin-bottom: 30px;
+    color: #666; /* Color del texto */
+    font-weight: 400; /* Peso de la fuente */
+}
+
+/* Contenedor de las cajas de herramientas */
+.tool-boxes {
+    display: flex;
+    flex-wrap: wrap; /* Permitir ajuste de elementos */
+    gap: 20px; /* Espacio entre cajas */
+    justify-content: center; /* Centrar contenido */
+}
+
+/* Estilos para cada caja de herramienta */
+.tool-box {
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1); /* Sombra */
+    padding: 20px;
+    width: calc(33% - 20px); /* Ancho calculado */
+    min-width: 200px; /* Ancho mínimo */
+    text-align: center;
+}
+
+/* Título de cada caja de herramienta */
+.tool-box h3 {
+    margin-bottom: 10px;
+    color: #333; /* Color del texto */
+    font-weight: 600; /* Peso de la fuente */
+}
+
+/* Descripción de cada caja de herramienta */
+.tool-box p {
+    margin-bottom: 20px;
+    color: #666; /* Color del texto */
+    font-weight: 400; /* Peso de la fuente */
+}
+
+/* Estilos generales para los botones */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px; /* Bordes redondeados */
+    font-size: 16px;
+    color: white; /* Color del texto */
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra */
+    text-decoration: none; /* Sin subrayado */
+    text-align: center;
+}
+
+/* Estilos para el botón del dashboard */
+.btn-dashboard {
+    background: linear-gradient(135deg, #6dbf6e, #4e8e4e); /* Fondo con degradado verde */
+}
+
+/* Efecto hover para el botón del dashboard */
+.btn-dashboard:hover {
+    background: linear-gradient(135deg, #4e8e4e, #3b6a3b); /* Fondo con degradado verde oscuro */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Estilos para el botón de registrar incidencia */
+.btn-register-incident {
+    background: linear-gradient(135deg, #6ca0d6, #4675a3); /* Fondo con degradado azul */
+}
+
+/* Efecto hover para el botón de registrar incidencia */
+.btn-register-incident:hover {
+    background: linear-gradient(135deg, #4675a3, #33587a); /* Fondo con degradado azul oscuro */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Estilos para el botón de KPIs */
+.btn-kpis {
+    background: linear-gradient(135deg, #ff9f40, #ff6f00); /* Fondo con degradado naranja */
+}
+
+/* Efecto hover para el botón de KPIs */
+.btn-kpis:hover {
+    background: linear-gradient(135deg, #ff6f00, #e65a00); /* Fondo con degradado naranja oscuro */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Estilos para el botón de logout */
+.btn-logout {
+    background: linear-gradient(135deg, #e74c3c, #c0392b); /* Fondo con degradado rojo */
+}
+
+/* Efecto hover para el botón de logout */
+.btn-logout:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226); /* Fondo con degradado rojo oscuro */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Contenedor de los enlaces del encabezado */
+.header-links {
+    display: flex;
+    justify-content: flex-end; /* Alinear a la derecha */
+    margin-bottom: 20px;
+}

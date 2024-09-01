@@ -1,0 +1,26 @@
+@startuml
+
+' Definición de la entidad User con sus atributos
+entity User {
+    + id: Integer
+    + username: String
+    + email: String
+    + password_hash: String
+}
+
+' Definición de la entidad Incident con sus atributos
+entity Incident {
+    + id: Integer
+    + project: String
+    + description: String
+    + position: String
+    + responsible: String
+    + status: String
+    + created_by: String
+    + created_at: DateTime
+}
+
+' Relación entre User e Incident donde un usuario puede crear múltiples incidencias
+User ||--o{ Incident : creates
+
+@enduml

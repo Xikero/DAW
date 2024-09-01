@@ -1,0 +1,40 @@
+@startuml
+
+' Definir nodos físicos/virtuales
+node "Usuario/Navegador Web" as Browser {
+    [Navegador Web]
+}
+
+node "Servidor de Aplicaciones" as AppServer {
+    component "Aplicación Web" as WebApp {
+        component [Frontend] as FE
+        component "API" as API
+        component [Backend] as BE
+    }
+}
+
+node "Servidor de Base de Datos" as DBServer {
+    [SQLite]
+}
+
+' Relaciones entre nodos
+Browser --> AppServer : "Solicitudes HTTP"
+AppServer --> DBServer : "Consultas SQL"
+
+' Agregar notas a los nodos
+note top of Browser
+  Este es el navegador web del usuario,
+  donde se carga el frontend de la aplicación.
+end note
+
+note top of AppServer
+  Este es el servidor de aplicaciones,
+  donde se ejecuta el frontend, la API y el backend.
+end note
+
+note top of DBServer
+  Este es el servidor de base de datos,
+  encargado de almacenar y gestionar los datos.
+end note
+
+@enduml
